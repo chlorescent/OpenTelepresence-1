@@ -16,3 +16,4 @@
 /Users/pd/Documents/College/Work/Telepresence/Final/telekinect/client/P2PConnection/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/pd/Documents/College/Work/Telepresence/Final/telekinect/client/P2PConnection/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/pd/Documents/College/Work/Telepresence/Final/telekinect/client/P2PConnection/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/pd/Documents/College/Work/Telepresence/Final/telekinect/client/P2PConnection/Temp/bin/Debug/LZ4.dll

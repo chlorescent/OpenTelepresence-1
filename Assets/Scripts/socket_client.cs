@@ -43,13 +43,14 @@ public class socket_client : MonoBehaviour
     public Socket sockfd;
     public int portno = 27160;
 	public string ip = "100.8.48.145";
-	[Range(0, 8000)]
-    public int distance_range = 8000;
+	[Range(0f, 35)]
+    public float distance_range = 20;
     public IPEndPoint endpoint;
     public int n = 0;
 //	public byte[] buffer = new byte[2457600];//size of image data
 //	public byte[] holder = new byte[2457600];//hold buffer data so it can be overwritten 
 	public byte[] clientMessage = new byte[1];
+	public GameObject myPlane;
 
 //    public bool connected = false;
 
@@ -71,7 +72,7 @@ public class socket_client : MonoBehaviour
 //	byte[] requestCode = new byte[]{ 0x61 };
     
 	void Awake(){
-		myRenderer = GetComponent<Renderer>();
+		myRenderer = myPlane.GetComponent<Renderer>();
 
 
 		// Get details from playerprefs
@@ -222,7 +223,6 @@ public class socket_client : MonoBehaviour
 					});
 
 					receiveDone.Set();
-					Debug.Log("here");
 				}
 				else{
 					// Get the rest of the data.

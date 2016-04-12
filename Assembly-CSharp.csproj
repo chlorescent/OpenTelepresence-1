@@ -110,6 +110,9 @@
      <Compile Include="Assets\Vuforia\Scripts\WordBehaviour.cs" />
      <Compile Include="Assets\_scripts\ConnectionSetup.cs" />
      <Compile Include="Assets\_scripts\LZScript.cs" />
+     <Compile Include="Assets\_scripts\NormalSolver.cs" />
+     <Compile Include="Assets\_scripts\RescaleObject.cs" />
+     <Compile Include="Assets\_scripts\SmoothNormals.cs" />
      <None Include="Assets\RGBDShader_new.shader" />
      <None Include="Assets\Shaders\newRGBD2.shader" />
      <None Include="Assets\Vuforia\Shaders\ColoredLines.shader" />

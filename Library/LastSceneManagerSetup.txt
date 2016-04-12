@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_scenes/testdelte.unity
+- path: Assets/_scenes/NetworkClient.unity
   isLoaded: 1
   isActive: 1
