@@ -1,7 +1,63 @@
 Base path: /Applications/Unity5.2.3f1/Unity.app/Contents
-Pipe name: \\.\pipe\UnityShaderCompiler-64bit-1-1933905920
+Pipe name: \\.\pipe\UnityShaderCompiler-64bit-1-1943166976
 Cmd: getPlatforms
+Cmd: compileSnippet
+  api=0 type=0 insize=990 outsize=463 kw= pd= ok=1
+Cmd: compileSnippet
+  api=0 type=1 insize=990 outsize=6 kw= pd= ok=1
+Cmd: compileSnippet
+  api=0 type=0 insize=2112 outsize=1166 kw= pd= ok=1
+Cmd: compileSnippet
+  api=0 type=1 insize=2112 outsize=6 kw= pd= ok=1
+Cmd: compileSnippet
+  api=0 type=0 insize=1420 outsize=1195 kw= pd= ok=1
+Cmd: compileSnippet
+  api=0 type=1 insize=1420 outsize=6 kw= pd= ok=1
+Cmd: preprocess
+  insize=2019 outsize=333 ok=1
 Cmd: compileSnippet
   api=0 type=0 insize=1985 outsize=975 kw= pd= ok=1
 Cmd: compileSnippet
   api=0 type=1 insize=1985 outsize=6 kw= pd= ok=1
+Cmd: preprocess
+  insize=2019 outsize=333 ok=1
+Cmd: preprocess
+  insize=665 outsize=665 ok=1
+Cmd: preprocess
+  insize=808 outsize=808 ok=1
+Cmd: preprocess
+  insize=2809 outsize=212 ok=1
+Cmd: preprocess
+  insize=521 outsize=521 ok=1
+Cmd: preprocess
+  insize=892 outsize=259 ok=1
+Cmd: compileSnippet
+  api=0 type=0 insize=933 outsize=526 kw= pd= ok=1
+Cmd: compileSnippet
+  api=0 type=1 insize=933 outsize=6 kw= pd= ok=1
+Cmd: preprocess
+  insize=2757 outsize=217 ok=1
+Cmd: preprocess
+  insize=672 outsize=672 ok=1
+Cmd: preprocess
+  insize=890 outsize=890 ok=1
+Cmd: preprocess
+  insize=290 outsize=290 ok=1
+Cmd: preprocess
+  insize=8185 outsize=4415 ok=1
+Cmd: preprocess
+  insize=2211 outsize=398 ok=1
+Cmd: compileSnippet
+  api=0 type=0 insize=2112 outsize=1166 kw= pd= ok=1
+Cmd: compileSnippet
+  api=0 type=1 insize=2112 outsize=6 kw= pd= ok=1
+Cmd: preprocess
+  insize=773 outsize=773 ok=1
+Cmd: compileSnippet
+  api=0 type=0 insize=3695 outsize=1489 kw=DIRECTIONAL pd= ok=1
+Cmd: compileSnippet
+  api=0 type=1 insize=3695 outsize=6 kw=DIRECTIONAL pd= ok=1
+Cmd: compileSnippet
+  api=0 type=0 insize=1444 outsize=559 kw= pd= ok=1
+Cmd: compileSnippet
+  api=0 type=1 insize=1444 outsize=6 kw= pd= ok=1

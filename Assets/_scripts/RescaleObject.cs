@@ -18,7 +18,7 @@ public class RescaleObject : MonoBehaviour {
 	}
 
 	public void ChangeScale(GameObject plane) {
-		_ARCam.GetComponent<socket_client> ().distance_range = _slider.value;
+		_ARCam.GetComponent<SocketClient> ().scale = _slider.value;
 	}
 
 	public void RotateObject(GameObject plane) {

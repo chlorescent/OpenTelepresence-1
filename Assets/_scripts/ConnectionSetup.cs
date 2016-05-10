@@ -4,7 +4,7 @@ using System;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
 using Vuforia;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public class ConnectionSetup : MonoBehaviour {
 
@@ -53,8 +53,8 @@ public class ConnectionSetup : MonoBehaviour {
 		PlayerPrefs.SetInt ("MinDepth", int.Parse(minDepth.text));
 		PlayerPrefs.SetInt ("MaxDepth", int.Parse(maxDepth.text));
 		PlayerPrefs.SetInt ("DistanceRange", int.Parse (maxDepth.text));
-
-		SceneManager.LoadScene (1);
+		Application.LoadLevel (1);
+		//SceneManager.LoadScene (1);
 		/*
 		//ARCamera.SetActive (true);
 		VuforiaBehaviour.Instance.enabled = true;

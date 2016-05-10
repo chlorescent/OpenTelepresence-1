@@ -11,26 +11,34 @@ using CielaSpike;
 using Battlehub.Dispatcher;
 
 // State object for receiving data from remote device.
-public class StateObject {
+public class StateObject_socet_client {
 	// Client socket.
+
 	public Socket workSocket = null;
 	// Size of receive buffer.
+//	public const int BufferSize = 2457600;
+
+
+	public const int RawBufferSize = 2457608;
 	public const int BufferSize = 2457600;
 	// Receive buffer.
-	public byte[] buffer = new byte[BufferSize];
+	public byte[] buffer = new byte[RawBufferSize];
 	// Received data string.
 	public StringBuilder sb = new StringBuilder();
 //	public List<byte> recvData = new List<byte>();
 	public byte[] recvData = new byte[BufferSize];
 	public int currByteCount = 0;
 	public bool isSettingTexture = false;
-
+	public int currReadBufferSize = BufferSize;
+	public bool bufSizeReceived = false;
 
 	public void Reset(){
 		//Debug.Log("resetting");
 		currByteCount = 0;
+		currReadBufferSize = BufferSize;
 //		recvData.Clear();
 		isSettingTexture = false;
+		bufSizeReceived = false;
 //		sb.Remove(0,sb.Length-1);
 //		Debug.Log("sb length: " + sb.Length);
 	}
@@ -44,13 +52,12 @@ public class socket_client : MonoBehaviour
     public int portno = 27160;
 	public string ip = "100.8.48.145";
 	[Range(0f, 35)]
-    public float distance_range = 20;
+    public float scale = 20;
     public IPEndPoint endpoint;
     public int n = 0;
 //	public byte[] buffer = new byte[2457600];//size of image data
 //	public byte[] holder = new byte[2457600];//hold buffer data so it can be overwritten 
-	public byte[] clientMessage = new byte[1];
-	public GameObject myPlane;
+//	public byte[] clientMessage = new byte[1];
 
 //    public bool connected = false;
 
@@ -70,15 +77,22 @@ public class socket_client : MonoBehaviour
 	Renderer myRenderer;
 
 //	byte[] requestCode = new byte[]{ 0x61 };
-    
-	void Awake(){
-		myRenderer = myPlane.GetComponent<Renderer>();
+	byte[] sizeBytes;
+	byte[] compressedBytes;
 
+	int sizeByteCount = 8;
+
+	public GameObject myPlane;
+
+	void Awake(){
+//		outputBuf = new byte[StateObject.BufferSize];
+		sizeBytes = new byte[sizeByteCount];
+		myRenderer = myPlane.GetComponent<Renderer>();
 
 		// Get details from playerprefs
 		ip = PlayerPrefs.GetString("IPAddress");
 		portno = PlayerPrefs.GetInt ("PortNo");
-		distance_range = PlayerPrefs.GetInt ("DisplayRange");
+		scale = PlayerPrefs.GetInt ("DisplayRange");
 	}
 
 	void Start()
@@ -92,28 +106,18 @@ public class socket_client : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(rot);
         var matrix = Matrix4x4.TRS(pos, rotation, scale);
 		myRenderer.material.SetMatrix("_Matrix", matrix);
-        //        if (connected)
-        //        {
-        //            getData();
-        //        }
     }
 
 	void OnApplicationQuit() {
 		// Release the socket.
 		if(clientTask != null) clientTask.Cancel();
 		if(requestDataTask != null) requestDataTask.Cancel();
-//		if(sockfd!= null){
-//			Debug.Log("shutting down socket");
-//			sockfd.Shutdown(SocketShutdown.Both);
-//			sockfd.Close();
-//		}
+		if(sockfd!= null){
+			Debug.Log("shutting down socket");
+			sockfd.Shutdown(SocketShutdown.Both);
+			sockfd.Close();
+		}
 	}
-
-    void Update()
-    {
-		//Debug.Log("debugging on main thread");
-
-    }
 
 	IEnumerator connectToServer()
     {
@@ -177,11 +181,10 @@ public class socket_client : MonoBehaviour
 //			currentState.recvData.Clear();
 			currentState.Reset();
 			currentState.workSocket = client;
-			//Debug.Log("begin receiving from server");
-			// Begin receiving the data from the remote device.
+			Debug.Log("begin receiving from server");
+//			 Begin receiving the data from the remote device.
 			client.BeginReceive(currentState.buffer, 0, StateObject.BufferSize, 0,
 				new AsyncCallback(ReceiveCallback), currentState);
-			
 		} catch (Exception e) {
 			Console.WriteLine(e.ToString());
 		}
@@ -198,26 +201,35 @@ public class socket_client : MonoBehaviour
 			int bytesRead = client.EndReceive(ar);
 
 			if (bytesRead > 0) {
-				// There might be more data, so store the data received so far.
+//				// There might be more data, so store the data received so far.
 //				Debug.Log("received " + bytesRead + " bytes from server");
-				for(int i=0;i<bytesRead;i++){
-//					currentState.recvData.Add(currentState.buffer[i]);
-					state.recvData[state.currByteCount + i] = state.buffer[i];
+				if(!state.bufSizeReceived && state.currByteCount == 0){
+					for(int i=0; i<sizeByteCount;i++){
+						sizeBytes[i] = state.buffer[i];
+					}
+					state.currReadBufferSize = int.Parse(GetString(sizeBytes));
+//					Debug.Log("Read size: " + state.currReadBufferSize);
+
+					for(int i=sizeByteCount;i<bytesRead;i++){
+						state.recvData[(i-sizeByteCount)] = state.buffer[i];
+					}
+					state.currByteCount += (bytesRead - sizeByteCount);
+					state.bufSizeReceived = true;
+				}
+				else{
+					for(int i=0;i<bytesRead;i++){
+	//					currentState.recvData.Add(currentState.buffer[i]);
+						state.recvData[state.currByteCount + i] = state.buffer[i];
+					}
+					state.currByteCount += bytesRead;
 				}
 
-
-//				if (state.recvData[0] != 'n'){
-//					assignTexture();
-//				}
-//				Debug.Log("buffer size: " + buffer.Length);
-				state.currByteCount += bytesRead;
-					
-				if(state.currByteCount == StateObject.BufferSize){
+				if(state.currByteCount == state.currReadBufferSize){
 //					Debug.Log("stringbuilder leng: " + state.sb.Length);
 
 					Dispatcher.Current.BeginInvoke(() =>
 					{
-//							Debug.Log("assigning texture, recvDataCount: " + state.recvData.Count);
+							Debug.Log("assigning texture");
 							currentState.isSettingTexture = true;
 							assignTexture();
 					});
@@ -225,22 +237,24 @@ public class socket_client : MonoBehaviour
 					receiveDone.Set();
 				}
 				else{
-					// Get the rest of the data.
+//						Get the rest of the data.
 					client.BeginReceive(state.buffer,0,StateObject.BufferSize,0,
 						new AsyncCallback(ReceiveCallback), state);
-					
 				}
-			} else {
+//				}
+			}
+			else {
 				// All the data has arrived; put it in response.
-
+				Debug.Log("not receiving bytes");
 				//Debug.Log("No data are being read");
 
-				if(state.currByteCount == StateObject.BufferSize){
+				if(state.currByteCount == state.currReadBufferSize){
 					//					Debug.Log("stringbuilder leng: " + state.sb.Length);
 
 					Dispatcher.Current.BeginInvoke(() =>
 						{
 //							Debug.Log("assigning texture, recvDataCount: " + state.recvData.Count);
+							Debug.Log("not receiving now, assigning texture");
 							currentState.isSettingTexture = true;
 							assignTexture();
 						});
@@ -308,70 +322,41 @@ public class socket_client : MonoBehaviour
 			{
 				this.StartCoroutineAsync(RequestData(), out requestDataTask);
 			});
-
 //		StartCoroutine(RequestData());
 	}
 
-//    void getData()
-//    {
-//        try
-//        {
-//            byte[] bytes = { 0x61 };
-//            // Send message to server
-//            sockfd.Send(bytes, bytes.Length, SocketFlags.None);
-//
-//            try
-//            {
-//                // Receive message from server
-//				int foo = sockfd.Receive(buffer,2457600, SocketFlags.None);
-//                Debug.Log("received: "+foo);
-//				if (buffer[0] != 'n'){
-//                    assignTexture();
-//				}
-//            }
-//            catch (SocketException ex)
-//            {
-//                Debug.Log("Error Reading From Socket: " + ex.ToString());
-//            }
-//        }
-//        catch (SocketException ex)
-//        {
-//            Debug.Log("Error Writing To Socket: " + ex.ToString());
-//        }
-//    }
-//
     static byte[] GetBytes(string str)
     {
         return System.Text.Encoding.UTF8.GetBytes(str);
     }
 //
-//    static string GetString(byte[] bytes)
-//    {
-//        return System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-//    }
+    static string GetString(byte[] bytes)
+    {
+        return System.Text.Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+    }
 
 	void assignTexture()
     {
-
-//		Texture2D tex = new Texture2D(640, 960, TextureFormat.RGBA32, false);
 		if(!SystemInfo.SupportsTextureFormat(TextureFormat.RGBA32)) Debug.Log("rgba32 not supported");
 		Texture2D tex = new Texture2D(640, 960, TextureFormat.RGBA32, false);
-//		Texture2D tex = new Texture2D(640, 960, TextureFormat.DXT1, false);
         // Load data into the texture and upload it to the GPU.
-//        tex.LoadRawTextureData(buffer);
-//		tex.LoadRawTextureData(currentState.recvData.ToArray());
-		tex.LoadRawTextureData(currentState.recvData);
-//		tex.LoadRawTextureData(GetBytes(currentState.sb.ToString()));
-//		tex.LoadRawTextureData(currentState.buffer);
+
+		if(currentState.currReadBufferSize >= StateObject.BufferSize){ //if is maximum buffer size
+			compressedBytes = currentState.recvData;
+		}
+		else{
+			//extract only compressed data from the received data array
+			compressedBytes = new byte[currentState.currReadBufferSize];
+			for(int i=0;i<compressedBytes.Length;i++){
+				compressedBytes[i] = currentState.recvData[i];	
+			}
+		}
+
+		tex.LoadRawTextureData(LZ4.LZ4Codec.Decode(compressedBytes,0,compressedBytes.Length,StateObject.BufferSize));
 		tex.Apply();
 
-		//Debug.Log("" + 1.0/Time.deltaTime);
-
         // Assign texture to renderer's material.
-		if (myRenderer.material.mainTexture != null) {
-			Destroy (myRenderer.material.mainTexture);
-			System.GC.Collect();
-		}
+		if(myRenderer.material.mainTexture != null) DestroyImmediate(myRenderer.material.mainTexture, true);
 		myRenderer.material.mainTexture = tex;
 		currentState.isSettingTexture = false;
         setRange();
@@ -380,7 +365,7 @@ public class socket_client : MonoBehaviour
 
     void setRange()
     {
-		myRenderer.material.SetFloat("_Scale", distance_range);
+		myRenderer.material.SetFloat("_Scale", scale);
     }
     void setMode()
     {

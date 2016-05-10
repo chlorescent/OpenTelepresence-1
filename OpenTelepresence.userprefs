@@ -1,0 +1,19 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_scripts/ConnectionSetup.cs">
+    <Files>
+      <File FileName="Assets/Scripts/socket_client_backup.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/socket_client.cs" Line="1" Column="1" />
+      <File FileName="Assets/_scripts/RescaleObject.cs" Line="1" Column="1" />
+      <File FileName="Assets/_scripts/SocketClient.cs" Line="1" Column="1" />
+      <File FileName="Assets/Shaders/newRGBD2-1.shader" Line="1" Column="1" />
+      <File FileName="Assets/Shaders/newRGBD2.shader" Line="1" Column="1" />
+      <File FileName="Assets/Shaders/newRGBD3.shader" Line="1" Column="1" />
+      <File FileName="Assets/_scripts/ConnectionSetup.cs" Line="19" Column="16" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
