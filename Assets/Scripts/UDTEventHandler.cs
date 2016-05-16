@@ -24,7 +24,7 @@ public class UDTEventHandler : MonoBehaviour, IUserDefinedTargetEventHandler
 
 
     #region PRIVATE_MEMBERS
-    private const int MAX_TARGETS = 5;
+    private const int MAX_TARGETS = 1;
     private UserDefinedTargetBuildingBehaviour mTargetBuildingBehaviour;
     private QualityDialog mQualityDialog;
     private ObjectTracker mObjectTracker;

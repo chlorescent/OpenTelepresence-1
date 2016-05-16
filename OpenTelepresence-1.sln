@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{06C25773-41FE-27C7-9960-86C4B336D623}") = "OpenTelepresence-1", "Assembly-CSharp.csproj", "{B1E2961A-EB3B-FB30-5914-3D8F76AEC443}"
+EndProject
+Project("{06C25773-41FE-27C7-9960-86C4B336D623}") = "OpenTelepresence-1", "Assembly-CSharp-Editor.csproj", "{8D5C29EB-FD01-BC48-3245-42BAADA3286D}"
+EndProject
+Project("{06C25773-41FE-27C7-9960-86C4B336D623}") = "OpenTelepresence-1", "Assembly-UnityScript-Editor-firstpass.unityproj", "{94600878-A338-FA77-AE96-1E24E65D4B8C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1E2961A-EB3B-FB30-5914-3D8F76AEC443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1E2961A-EB3B-FB30-5914-3D8F76AEC443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1E2961A-EB3B-FB30-5914-3D8F76AEC443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1E2961A-EB3B-FB30-5914-3D8F76AEC443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D5C29EB-FD01-BC48-3245-42BAADA3286D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D5C29EB-FD01-BC48-3245-42BAADA3286D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D5C29EB-FD01-BC48-3245-42BAADA3286D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D5C29EB-FD01-BC48-3245-42BAADA3286D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94600878-A338-FA77-AE96-1E24E65D4B8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94600878-A338-FA77-AE96-1E24E65D4B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94600878-A338-FA77-AE96-1E24E65D4B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94600878-A338-FA77-AE96-1E24E65D4B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
